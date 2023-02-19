@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 
 public class WeeklyTask extends Task{
 
-    public WeeklyTask(String title, Type type, LocalDateTime dateTime, String description) throws IncorrectArgumentException {
-        super(title, type, dateTime, description);
+    public WeeklyTask(String title, TaskType taskType, LocalDateTime dateTime, String description) throws IncorrectArgumentException {
+        super(title, taskType, dateTime, description);
     }
 
     @Override

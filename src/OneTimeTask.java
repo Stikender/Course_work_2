@@ -3,8 +3,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class OneTimeTask extends Task{
-    public OneTimeTask(String title, Type type, LocalDateTime dateTime, String description) throws IncorrectArgumentException {
-        super(title, type, dateTime, description);
+    public OneTimeTask(String title, TaskType taskType, LocalDateTime dateTime, String description) throws IncorrectArgumentException {
+        super(title, taskType, dateTime, description);
     }
 
     @Override
