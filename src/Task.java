@@ -3,27 +3,26 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public abstract class Task {
+public abstract class Task implements Comparable<Task>{
 
-    private int idGenerator;
-    private String title;
-    private Type type;
-    private int id;
-    private LocalDateTime dateTime;
-    private String description;
+    private static int idGenerator = 0;
+    private final int id;
+    private final String title;
+    private final Type type;
+    private final LocalDateTime dateTime;
+    private final String description;
 
-    public Task(String title, Type type, int id, LocalDateTime dateTime, String description) throws IncorrectArgumentException {
-        this.idGenerator = 1;
+    public Task(String title, Type type, LocalDateTime dateTime, String description) throws IncorrectArgumentException {
+        this.id = idGenerator++;
         if (title == null || title.isEmpty() || title.isBlank()) {
             throw new IncorrectArgumentException("Не корректно введен заголовок");
         } else {
             this.title = title;
         }
-            this.type = type;
+        this.type = type;
         if (Double.compare(id, 0) == 0) {
             throw new IncorrectArgumentException("Не корректно введен id задачи");
         } else {
-            this.id = id;
         }
         this.dateTime = dateTime;
         if (description == null || description.isEmpty() || description.isBlank()) {
@@ -33,20 +32,16 @@ public abstract class Task {
         }
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public Type getType() {
         return type;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public LocalDateTime getDateTime() {
@@ -55,10 +50,6 @@ public abstract class Task {
 
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     @Override
@@ -87,4 +78,13 @@ public abstract class Task {
     }
 
     public abstract boolean appearsIn(LocalDate date);
+
+    public abstract Repeatability getRepeatabilityType();
+
+    public int compareTo(Task otherTask) {
+        if (otherTask == null) {
+        return 1;
+        }
+        return this.dateTime.toLocalTime().compareTo(otherTask.dateTime.toLocalTime());
+    }
 }
