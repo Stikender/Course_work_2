@@ -95,7 +95,7 @@ public class Main {
             default:
             throw new IllegalArgumentException();
         };
-        return " 5";
+        return localizeType(taskType);
     }
     private static String localizeRepeatability(Repeatability repeatability) {
         switch (repeatability) {
