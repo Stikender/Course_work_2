@@ -22,6 +22,7 @@ public class Main {
        Scanner scanner = new Scanner(System.in);
        TASK_SERVICE.addTask(new OneTimeTask("Награждение сотрудников", TaskType.WORK, LocalDateTime.now().plusDays(3), "Вручение благодарностей, премии"));
        TASK_SERVICE.addTask(new DailyTask("Отдых на свежем воздухе", TaskType.PERSONAL, LocalDateTime.now().plusDays(1),"Прогулка"));
+       TASK_SERVICE.addTask(new WeeklyTask("Итоги недели", TaskType.WORK, LocalDateTime.now().plusHours(5), "Подведение итогов недели, планирование на будущую неделю"));
        TASK_SERVICE.addTask(new YearlyTask("Встреча Нового года!", TaskType.PERSONAL, LocalDateTime.of(2023,12, 31, 23, 59, 59), "Наливаем шампанское, загадываем желание"));
 
         addTask(scanner);
