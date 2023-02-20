@@ -4,11 +4,20 @@ public enum Type {
     PERSONAL("Личная");
 public String type;
 
-    Type(String type) throws IncorrectArgumentException {
+    Type(String type)  {
         if (type == null || type.isEmpty() || type.isBlank()) {
-            throw new IncorrectArgumentException("Не корректно введен тип задачи");
+            this.type = "Не корректное значение";
         } else {
             this.type = type;
         }
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    @Override
+    public String toString() {
+        return getType();
     }
 }
