@@ -1,8 +1,12 @@
+package Diary;
+
+import Diary.Exception.IncorrectArgumentException;
+
 import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class MonthlyTask extends Task{
+public class MonthlyTask extends Task {
     public MonthlyTask(String title, TaskType taskType, LocalDateTime dateTime, String description) throws IncorrectArgumentException {
         super(title, taskType, dateTime, description);
     }

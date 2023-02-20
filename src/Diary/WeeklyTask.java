@@ -1,8 +1,13 @@
-import java.lang.reflect.Type;
+package Diary;
+
+import Diary.Exception.IncorrectArgumentException;
+import Diary.Repeatability;
+import Diary.Task;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class WeeklyTask extends Task{
+public class WeeklyTask extends Task {
 
     public WeeklyTask(String title, TaskType taskType, LocalDateTime dateTime, String description) throws IncorrectArgumentException {
         super(title, taskType, dateTime, description);

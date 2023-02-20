@@ -1,3 +1,5 @@
+package Diary.Exception;
+
 public class IncorrectArgumentException extends Throwable {
     private String argument;
 

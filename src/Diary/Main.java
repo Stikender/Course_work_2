@@ -1,3 +1,8 @@
+package Diary;
+
+import Diary.Exception.IncorrectArgumentException;
+import Diary.Exception.TaskNotFoundException;
+
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -14,9 +19,14 @@ public class Main {
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
 
     public static void main(String[] args) throws IncorrectArgumentException {
-        Scanner scanner = new Scanner(System.in);
-       TASK_SERVICE.addTask(new OneTimeTask("title1", TaskType.PERSONAL, LocalDateTime.now().plusDays(1),"Walk"));
+       Scanner scanner = new Scanner(System.in);
+       TASK_SERVICE.addTask(new OneTimeTask("Награждение сотрудников", TaskType.WORK, LocalDateTime.now().plusDays(3), "Вручение благодарностей, премии"));
+       TASK_SERVICE.addTask(new DailyTask("Отдых на свежем воздухе", TaskType.PERSONAL, LocalDateTime.now().plusDays(1),"Прогулка"));
+       TASK_SERVICE.addTask(new YearlyTask("Встреча Нового года!", TaskType.PERSONAL, LocalDateTime.of(2023,12, 31, 23, 59, 59), "Наливаем шампанское, загадываем желание"));
+
         addTask(scanner);
+//        removeTasks(scanner);
+//        printTaskForDate(scanner);
     }
 
     private static void addTask(Scanner scanner) throws IncorrectArgumentException {
@@ -42,6 +52,7 @@ public class Main {
                 break;
             case YEARLY_TASK:
                 task = new YearlyTask(title, taskType, taskDate, description);
+                break;
             default:
                 throw new IllegalArgumentException();
         };
@@ -53,7 +64,7 @@ public class Main {
             try {
                 System.out.println("Выберете тип задачи:");
                 for (TaskType taskType : TaskType.values()) {
-                    System.out.println(taskType.ordinal() + ". " + localizeType(taskType));
+                    System.out.println(taskType.ordinal() + ". " + taskType.getTaskType());
                 }
                 System.out.println("Введите тип:");
                 String ordinalLine = scanner.nextLine();
@@ -72,7 +83,7 @@ public class Main {
             try {
                 System.out.println("Выберете тип повторяемости задачи:");
                 for (Repeatability repeatability : Repeatability.values()) {
-                    System.out.println(repeatability.ordinal() + ". " + localizeRepeatability(repeatability));
+                    System.out.println(repeatability.ordinal() + ". " + repeatability.getRepeatabilityType());
                 }
                 System.out.println("Введите тип:");
                 String ordinalLine = scanner.nextLine();
@@ -84,42 +95,6 @@ public class Main {
                 System.out.println("Не найдет тип задачи");}
         }
     }
-    private static String localizeType(TaskType taskType) {
-        switch (taskType) {
-            case WORK:
-            System.out.println("Рабочая задача");
-            break;
-            case PERSONAL:
-            System.out.println("Личная задача");
-            break;
-            default:
-            throw new IllegalArgumentException();
-        };
-        return localizeType(taskType);
-    }
-    private static String localizeRepeatability(Repeatability repeatability) {
-        switch (repeatability) {
-            case ONE_TIME_TASK:
-                System.out.println("Разовая");
-                break;
-            case DAILY_TASK:
-                System.out.println("Ежедневная");
-                break;
-            case WEEKLY_TASK:
-                System.out.println("Еженедельная");
-                break;
-            case MONTHLY_TASK:
-                System.out.println("Ежемесячная");
-                break;
-            case YEARLY_TASK:
-                System.out.println("Ежегодная");
-                break;
-            default:
-                throw new IllegalArgumentException();
-        };
-        return null;
-    }
-
     private static LocalDate readDate(Scanner scanner) {
         while (true) {
             try {
@@ -131,7 +106,6 @@ public class Main {
             }
         }
     }
-
     private static LocalTime readTime(Scanner scanner) {
         while (true) {
             try {
@@ -143,7 +117,6 @@ public class Main {
             }
         }
     }
-
     private static LocalDateTime readDateTime(Scanner scanner) {
         LocalDate localDate = readDate(scanner);
         LocalTime localTime = readTime(scanner);
@@ -154,17 +127,23 @@ public class Main {
         Collection<Task> taskForDate = TASK_SERVICE.getAllByDate(localDate);
         System.out.println("Задачи на " + localDate.format(DATE_FORMATTER));
         for (Task task : taskForDate) {
-            System.out.println(task.getTitle() + ", " + task.getTaskType() +
-                    ", " + task.getDateTime().format(TIME_FORMATTER) + ", " + task.getDescription());
+            System.out.println(task.getId() + ". Название задачи: " + task.getTitle() + ", Тип задачи: " + task.getTaskType() +
+                    ", Дата задачи: " + task.getDateTime().format(DATE_FORMATTER) +
+                    ", Время задачи: " + task.getDateTime().format(TIME_FORMATTER) +
+                    ", Повторяемость задачи: " + task.getRepeatabilityType() +
+                    ", Описание задачи: " + task.getDescription());
         }
     }
 
     private static void removeTasks(Scanner scanner) {
         System.out.println("Список всех задач:");
         for (Task task : TASK_SERVICE.getAllTasks()) {
-            System.out.println(task.getId() + ", " + task.getTitle() +
-                    ", " + task.getTaskType() +
-                    ", " + localizeRepeatability(task.getRepeatabilityType()));
+            System.out.println(task.getId() + ". Название задачи: " + task.getTitle() +
+                    ", Тип задачи: " + task.getTaskType() +
+                    ", Дата задачи: " + task.getDateTime().format(DATE_FORMATTER) +
+                    ", Время задачи: " + task.getDateTime().format(TIME_FORMATTER) +
+                    ", Повторяемость задачи: " + task.getRepeatabilityType()+
+                    ", Описание задачи: "  + task.getDescription());
         }
         while (true) {
             try {

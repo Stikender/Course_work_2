@@ -1,3 +1,7 @@
+package Diary;
+
+import Diary.Exception.TaskNotFoundException;
+
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashMap;
@@ -25,7 +29,7 @@ public class TaskService {
         return getAllTasks();
     }
 
-    public void removedTasks(int id) throws TaskNotFoundException{
+    public void removedTasks(int id) throws TaskNotFoundException {
         if (this.taskMap.containsKey(id)) {
             this.taskMap.remove(id);
         } else {

@@ -1,3 +1,7 @@
+package Diary;
+
+import Diary.Exception.IncorrectArgumentException;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -63,17 +67,6 @@ public abstract class Task implements Comparable<Task>{
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getTitle(), getTaskType(), getDateTime(), getDescription());
-    }
-
-    @Override
-    public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", type=" + taskType +
-                ", dateTime=" + dateTime +
-                ", description='" + description + '\'' +
-                '}';
     }
 
     public abstract boolean appearsIn(LocalDate date);
